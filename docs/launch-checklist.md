@@ -14,6 +14,7 @@
 - [x] **Security hardening** (xmlrpc blocked, PHP in uploads blocked, dotfiles hidden)
 - [x] **GoDaddy DNS** — A records set for @ and www to 145.241.209.163
 - [x] **Site smoke-tested** — all 6 pages return HTTP 200
+- [x] **Full-site redesign** — all 6 pages rebuilt in the dark cosmic theme (`site/`), deployable via `site/deploy.sh`
 
 ## ⏳ Remaining / Future
 

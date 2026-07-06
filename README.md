@@ -17,6 +17,7 @@ Website for DH Electrical Services — a trusted electrician based in Coulsdon, 
 
 | File | Purpose |
 |------|---------|
+| `site/` | **The full site** — all six page HTML files + deploy script (see `site/README.md`) |
 | `docs/site-reference.md` | Infrastructure, access, and brand reference |
 | `config/nginx-site.conf` | Production Nginx vhost config |
 | `assets/logo.png` | Site logo (DH Electrical Services brand mark) |
@@ -24,6 +25,12 @@ Website for DH Electrical Services — a trusted electrician based in Coulsdon, 
 
 ## Deployment
 
-The site is hosted on **vps02** (145.241.209.163) alongside theitrevolution.co.uk and other sites. Access is through a jumphost + tailscale chain.
+The site is hosted on **vps02** (145.241.209.163) alongside theitrevolution.co.uk and other sites. Access is through a jumphost + tailscale chain — see `docs/site-reference.md` for access details.
 
-See `docs/site-reference.md` for full access details.
+To deploy all pages into WordPress, run on vps02 from a checkout of this repo:
+
+```bash
+./site/deploy.sh
+```
+
+See `site/README.md` for the page → WordPress ID mapping and post-deploy checks.

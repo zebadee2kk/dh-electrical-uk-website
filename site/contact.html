@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact | Get a Quote | DH Electrical Services</title>
+  <meta name="description" content="Get a quote from DH Electrical Services — call 07824 512 971, email d.high@dh-electrical.uk, or send the quick quote form. Coulsdon, Surrey & surrounding areas." />
+
+  <style>
+    :root{
+      --bg:#05080c;            /* Deep space black */
+      --bg2:#080d12;
+      --panel:rgba(255,255,255,.045);
+      --panelBorder:rgba(255,255,255,.10);
+      --accent:#2BD46E;        /* Electric green */
+      --accentBright:#3BEA80;
+      --accentHover:#25BA60;
+      --accentDim:rgba(43,212,110,.14);
+      --accentBorder:rgba(43,212,110,.30);
+      --white:#FFFFFF;
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.62);
+      --radius:18px;
+      --shadowDark:0 18px 60px rgba(0,0,0,.45);
+      --container:min(1160px, 92%);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{width:var(--container);margin:0 auto}
+
+    /* ---- Cosmic backdrop: nebula glows + star field ---- */
+    .cosmos{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      min-height:100vh;
+      display:flex;flex-direction:column;
+      background:
+        radial-gradient(1100px 620px at 80% 12%, rgba(43,212,110,.30), transparent 60%),
+        radial-gradient(600px 380px at 68% 6%, rgba(59,234,128,.18), transparent 60%),
+        radial-gradient(700px 420px at 62% 74%, rgba(43,212,110,.12), transparent 60%),
+        radial-gradient(900px 520px at 8% 88%, rgba(43,212,110,.08), transparent 60%),
+        radial-gradient(1000px 600px at 15% 8%, rgba(30,55,90,.35), transparent 65%),
+        linear-gradient(180deg, #04070a, #060b0f 55%, #05090c);
+    }
+    .cosmos > main{flex:1}
+    .cosmos::before{ /* star field */
+      content:"";
+      position:absolute;inset:0;z-index:-1;
+      background-image:
+        radial-gradient(1.4px 1.4px at 22% 18%, rgba(255,255,255,.85), transparent 55%),
+        radial-gradient(1px 1px at 68% 8%, rgba(255,255,255,.7), transparent 55%),
+        radial-gradient(1.6px 1.6px at 84% 42%, rgba(255,255,255,.8), transparent 55%),
+        radial-gradient(1px 1px at 42% 62%, rgba(255,255,255,.55), transparent 55%),
+        radial-gradient(1.3px 1.3px at 12% 48%, rgba(255,255,255,.6), transparent 55%),
+        radial-gradient(1px 1px at 55% 32%, rgba(255,255,255,.65), transparent 55%),
+        radial-gradient(1.5px 1.5px at 92% 78%, rgba(255,255,255,.7), transparent 55%),
+        radial-gradient(1px 1px at 33% 88%, rgba(255,255,255,.5), transparent 55%),
+        radial-gradient(1.2px 1.2px at 74% 62%, rgba(255,255,255,.6), transparent 55%),
+        radial-gradient(1px 1px at 6% 72%, rgba(255,255,255,.5), transparent 55%);
+      background-size:820px 620px;
+      background-repeat:repeat;
+      opacity:.85;
+    }
+    .cosmos::after{ /* sweeping green light arc */
+      content:"";
+      position:absolute;z-index:-1;
+      left:-15%;right:-15%;bottom:-42%;height:80%;
+      border-radius:50%;
+      border-top:2px solid rgba(59,234,128,.35);
+      box-shadow:0 -30px 90px rgba(43,212,110,.25), 0 -6px 24px rgba(59,234,128,.30);
+      filter:blur(1px);
+      pointer-events:none;
+    }
+
+    /* ---- Top utility bar ---- */
+    .topbar{
+      background:rgba(4,7,10,.85);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      font-size:13px;
+      color:var(--muted);
+      position:relative;z-index:60;
+    }
+    .topbar .container{
+      display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+      padding:9px 0;
+    }
+    .topbar a{color:var(--text);font-weight:700}
+    .topbar a:hover{color:var(--accentBright)}
+    .topbar .dot{opacity:.45;margin:0 6px}
+    .tbIcon{color:var(--accent);margin-right:6px}
+    .tbRight{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+
+    /* ---- Header / nav ---- */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(5,8,12,.82);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 0;
+    }
+    .brand{display:flex;align-items:center}
+    .brand img{
+      height:46px;width:auto;display:block;
+      filter:drop-shadow(0 2px 10px rgba(0,0,0,.5));
+    }
+    .navlinks{display:flex;gap:4px;align-items:center}
+    nav a{
+      font-weight:700;
+      color:var(--text);
+      opacity:.82;
+      padding:10px 14px;border-radius:12px;
+      font-size:15px;
+    }
+    nav a:hover{opacity:1;background:rgba(255,255,255,.06)}
+    nav a.active{opacity:1;color:var(--accentBright);background:rgba(43,212,110,.08)}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 20px;border-radius:12px;
+      font-weight:800;cursor:pointer;font-size:15px;
+      border:1px solid transparent;
+      transition:.15s ease;
+      white-space:nowrap;
+    }
+    .btn.primary{
+      background:linear-gradient(180deg, var(--accentBright), var(--accent));
+      color:#04110A;
+      box-shadow:0 8px 24px rgba(43,212,110,.30), inset 0 1px 0 rgba(255,255,255,.35);
+    }
+    .btn.primary:hover{background:var(--accentHover);transform:translateY(-1px)}
+    .btn.ghost{
+      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.35);
+      color:var(--white);
+    }
+    .btn.ghost:hover{border-color:var(--white);background:rgba(255,255,255,.08);transform:translateY(-1px)}
+
+    /* ---- Hero (homepage) ---- */
+    .hero{padding:72px 0 44px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:36px;
+      align-items:center;
+    }
+    h1{
+      margin:0 0 18px;
+      font-size:56px;line-height:1.05;letter-spacing:-1px;
+      color:var(--white);
+      text-shadow:0 4px 30px rgba(0,0,0,.5);
+    }
+    .lead{
+      margin:0;
+      color:var(--muted);
+      max-width:56ch;
+      font-size:18px;
+      line-height:1.7;
+    }
+    .heroCtas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+    .heroCtas .btn{padding:14px 26px;font-size:16px}
+
+    /* ---- Page hero (interior pages) ---- */
+    .pageHero{padding:56px 0 8px}
+    .pageHero h1{font-size:44px}
+    .pageHero .lead{font-size:17px}
+
+    .chipGrid{
+      display:grid;grid-template-columns:repeat(2, minmax(0,max-content));
+      gap:12px;margin-top:28px;
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:11px 18px;border-radius:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:700;font-size:15px;color:var(--text);
+      backdrop-filter:blur(4px);
+    }
+    .tick{
+      width:22px;height:22px;border-radius:50%;
+      border:2px solid var(--accent);
+      display:inline-grid;place-items:center;
+      color:var(--accent);font-weight:900;font-size:12px;flex:0 0 auto;
+      line-height:1;
+    }
+
+    /* Quote card */
+    .quoteCard{
+      background:linear-gradient(180deg, rgba(16,24,22,.92), rgba(10,16,14,.92));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      box-shadow:var(--shadowDark), inset 0 1px 0 rgba(255,255,255,.06);
+      padding:26px;
+      backdrop-filter:blur(8px);
+    }
+    .quoteCard h3{
+      margin:0 0 10px;font-size:22px;color:var(--white);letter-spacing:-.2px;
+    }
+    .quoteCard h3 em{font-style:normal;color:var(--accentBright);font-weight:800}
+    .quoteCard > p{
+      margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.6;
+    }
+    .miniForm{display:grid;gap:12px}
+    .miniForm input, .miniForm textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.35);
+      color:var(--white);
+      font:inherit;font-size:15px;
+      outline:none;
+      transition:border-color .15s ease;
+    }
+    .miniForm input:focus, .miniForm textarea:focus{border-color:var(--accent)}
+    .miniForm input::placeholder,.miniForm textarea::placeholder{color:rgba(255,255,255,.45)}
+    .miniForm textarea{min-height:96px;resize:vertical}
+    .miniForm .btn{width:100%;padding:14px;font-size:16px}
+    .formNote{font-size:12.5px;color:rgba(255,255,255,.5);text-align:center;margin-top:2px}
+    .formNote a{color:var(--accentBright);font-weight:700}
+
+    /* ---- Trust strip ---- */
+    .trustStrip{padding:34px 0 56px}
+    .trustStrip .container{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+    }
+    .trustItem{
+      display:flex;align-items:center;gap:12px;
+      font-weight:800;font-size:17px;color:var(--white);
+    }
+    .trustItem .tick{width:26px;height:26px;font-size:14px}
+
+    /* ---- Sections ---- */
+    section{padding:56px 0}
+    .sectionHead{margin-bottom:26px}
+    h2{margin:0 0 6px;font-size:34px;letter-spacing:-.5px;color:var(--white)}
+    .sub{margin:0;color:var(--muted);font-size:16px}
+    .accentText{color:var(--accentBright)}
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .card{
+      background:var(--panel);
+      border:1px solid var(--panelBorder);
+      border-radius:var(--radius);
+      padding:22px;
+      transition:.15s ease;
+    }
+    .card:hover{border-color:var(--accentBorder);transform:translateY(-2px)}
+    .icon{
+      width:48px;height:48px;border-radius:14px;
+      background:var(--accentDim);
+      border:1px solid var(--accentBorder);
+      display:grid;place-items:center;
+      font-size:20px;
+      color:var(--accentBright);
+      margin-bottom:12px;
+    }
+    .card h3{margin:0 0 8px;font-size:17px;color:var(--white)}
+    .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
+    .card ul{
+      margin:12px 0 0;padding:0;list-style:none;
+      display:grid;gap:8px;
+    }
+    .card ul li{
+      color:var(--muted);font-size:14px;line-height:1.5;
+      padding-left:24px;position:relative;
+    }
+    .card ul li::before{
+      content:"\2713";
+      position:absolute;left:0;top:0;
+      color:var(--accentBright);font-weight:900;font-size:13px;
+    }
+
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .list{display:grid;gap:12px;margin-top:14px}
+    .li{display:flex;gap:12px;align-items:flex-start}
+    .li strong{color:var(--white)}
+    .stepNum{
+      width:26px;height:26px;border-radius:50%;
+      background:var(--accentDim);
+      border:1px solid var(--accentBorder);
+      display:grid;place-items:center;color:var(--accentBright);
+      font-weight:900;font-size:13px;flex:0 0 auto;
+    }
+
+    .price{color:var(--accentBright);font-weight:900}
+    .priceBig{font-size:30px;color:var(--accentBright);font-weight:900;letter-spacing:-.5px}
+
+    .priceTable{width:100%;border-collapse:collapse;margin-top:8px}
+    .priceTable th,.priceTable td{
+      text-align:left;padding:12px 6px;
+      border-bottom:1px solid rgba(255,255,255,.09);
+      font-size:15px;
+    }
+    .priceTable th{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+    .priceTable td:last-child,.priceTable th:last-child{text-align:right}
+    .priceTable tr:last-child td{border-bottom:none}
+
+    /* ---- CTA band ---- */
+    .ctaBand{
+      margin:8px 0 64px;
+      border-radius:22px;
+      border:1px solid var(--accentBorder);
+      background:
+        radial-gradient(600px 300px at 85% 0%, rgba(43,212,110,.22), transparent 60%),
+        linear-gradient(180deg, rgba(43,212,110,.10), rgba(255,255,255,.03));
+      padding:34px 36px;
+      display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+    }
+    .ctaBand h2{font-size:28px;margin:0 0 4px}
+    .ctaBand p{margin:0;color:var(--muted)}
+    .ctaBand .heroCtas{margin-top:0}
+
+    /* ---- Contact ---- */
+    .contactGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    form{display:grid;gap:12px}
+    .card input,.card textarea,
+    .wpcf7 input:not([type=submit]):not([type=checkbox]):not([type=radio]),
+    .wpcf7 textarea{
+      width:100%;
+      padding:13px 14px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.30);
+      color:var(--white);
+      font:inherit;outline:none;
+      transition:border-color .15s ease;
+    }
+    .card input:focus,.card textarea:focus,
+    .wpcf7 input:focus,.wpcf7 textarea:focus{border-color:var(--accent)}
+    .card input::placeholder,.card textarea::placeholder,
+    .wpcf7 input::placeholder,.wpcf7 textarea::placeholder{color:rgba(255,255,255,.45)}
+    .card textarea,.wpcf7 textarea{min-height:120px;resize:vertical}
+
+    /* Contact Form 7 chrome */
+    .wpcf7 form{display:grid;gap:12px}
+    .wpcf7 p{margin:0}
+    .wpcf7 label{display:grid;gap:6px;font-size:13.5px;font-weight:700;color:var(--muted)}
+    .wpcf7 input[type=submit]{
+      width:100%;
+      padding:14px;border-radius:12px;border:none;cursor:pointer;
+      font:inherit;font-weight:800;font-size:16px;
+      background:linear-gradient(180deg, var(--accentBright), var(--accent));
+      color:#04110A;
+      box-shadow:0 8px 24px rgba(43,212,110,.30), inset 0 1px 0 rgba(255,255,255,.35);
+      transition:.15s ease;
+    }
+    .wpcf7 input[type=submit]:hover{background:var(--accentHover);transform:translateY(-1px)}
+    .wpcf7 .wpcf7-not-valid-tip{color:#FF8A8A;font-size:12.5px;margin-top:4px}
+    .wpcf7 .wpcf7-response-output{
+      margin:4px 0 0;padding:12px 14px;border-radius:12px;
+      border:1px solid var(--accentBorder);color:var(--text);font-size:14px;
+    }
+
+    .note{font-size:12.5px;color:rgba(255,255,255,.5)}
+    .contactCard{border-color:var(--accentBorder)!important;background:linear-gradient(180deg, rgba(43,212,110,.07), rgba(255,255,255,.03))}
+
+    /* ---- Footer ---- */
+    footer{
+      background:rgba(3,5,8,.9);
+      color:var(--muted);
+      padding:28px 0 34px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+    .footLinks{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px}
+    .footLinks a{color:var(--muted);font-weight:700}
+    .footLinks a:hover{color:var(--accentBright)}
+    .small{font-size:12.5px;color:rgba(255,255,255,.5)}
+
+    @media (max-width: 960px){
+      h1{font-size:40px}
+      .pageHero h1{font-size:34px}
+      .heroGrid{grid-template-columns:1fr}
+      .hero{padding:44px 0 28px}
+      .trustStrip .container{grid-template-columns:repeat(2,1fr)}
+      .grid3{grid-template-columns:1fr}
+      .grid4{grid-template-columns:1fr 1fr}
+      .grid2{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      .contactGrid{grid-template-columns:1fr}
+      .navlinks{display:none}
+      .brand img{height:38px}
+      .chipGrid{grid-template-columns:1fr 1fr}
+      .chip{width:100%}
+      .ctaBand{padding:26px}
+    }
+    @media (max-width: 560px){
+      .trustStrip .container{grid-template-columns:1fr}
+      .chipGrid{grid-template-columns:1fr}
+      .grid4{grid-template-columns:1fr}
+      h1{font-size:34px}
+      .pageHero h1{font-size:30px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cosmos" id="top">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="container">
+        <div>
+          <span class="tbIcon">&#9906;</span>Surrey &amp; surrounding areas
+          <span class="dot">&bull;</span><strong style="color:var(--text)">Fully insured</strong>
+          <span class="dot">&bull;</span>Quick quotes
+        </div>
+        <div class="tbRight">
+          <span><span class="tbIcon">&#9743;</span><a href="tel:+447824512971">Call: 07824 512 971</a></span>
+          <span><span class="tbIcon">&#9993;</span><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+      <div class="container nav">
+        <a class="brand" href="/" aria-label="DH Electrical Services — home">
+          <img src="https://dh-electrical.uk/wp-content/uploads/2026/07/dh-electrical-logo.png" alt="DH Electrical Services" />
+        </a>
+
+        <nav class="navlinks" aria-label="Primary navigation">
+          <a href="/services/">Services</a>
+          <a href="/areas/">Areas</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/about/">About</a>
+          <a href="/contact/" class="active">Contact</a>
+        </nav>
+
+        <a class="btn primary" href="/contact/">Get a Quote</a>
+      </div>
+    </header>
+
+    <main>
+
+      <section class="pageHero">
+        <div class="container">
+          <h1>Get a <span class="accentText">Quote</span></h1>
+          <p class="lead">
+            Send your postcode and a quick description — photos help a lot.
+            We&rsquo;ll reply with availability and a price, usually the same day.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container contactGrid">
+          <div class="card">
+            <h2>Quick Quote</h2>
+            <p class="sub" style="margin-bottom:14px">Takes about a minute. We&rsquo;ll get back to you ASAP.</p>
+
+            <!-- Contact Form 7 (ID 20) renders here when deployed to WordPress -->
+            <div class="wpcf7-wrap">
+              [contact-form-7 id="20" title="Quick Quote"]
+            </div>
+
+            <p class="note" style="margin-top:14px">
+              Prefer not to use the form? Email
+              <a href="mailto:d.high@dh-electrical.uk" style="color:var(--accentBright);font-weight:700">d.high@dh-electrical.uk</a>
+              or message photos on WhatsApp to
+              <a href="tel:+447824512971" style="color:var(--accentBright);font-weight:700">07824 512 971</a>.
+            </p>
+          </div>
+
+          <div style="display:grid;gap:16px;align-content:start">
+            <div class="card contactCard">
+              <h2>Contact details</h2>
+              <div class="list">
+                <div class="li"><span class="stepNum">&#9743;</span><div><strong>Phone</strong><br><a href="tel:+447824512971">07824 512 971</a></div></div>
+                <div class="li"><span class="stepNum">@</span><div><strong>Email</strong><br><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></div></div>
+                <div class="li"><span class="stepNum">&#9201;</span><div><strong>Hours</strong><br><span class="sub">Mon&ndash;Sat: 8am&ndash;6pm</span></div></div>
+                <div class="li"><span class="stepNum">&#9906;</span><div><strong>Based in</strong><br><span class="sub">Coulsdon — covering Surrey &amp; surrounding areas</span></div></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 style="font-size:18px">What to include</h3>
+              <ul>
+                <li>Your postcode</li>
+                <li>What you need done (a sentence is fine)</li>
+                <li>Photos of the fuse board / area if you can</li>
+                <li>Any deadline — e.g. a tenancy start date</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding-top:0;padding-bottom:72px">
+        <div class="container">
+          <div class="card" style="border-left:4px solid var(--accent)">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between">
+              <div>
+                <h3 style="font-size:20px">&#128680; Urgent problem?</h3>
+                <p>No power, a board that won&rsquo;t reset, or something that smells hot — call rather than wait on the form.</p>
+              </div>
+              <a class="btn primary" href="tel:+447824512971">Call 07824 512 971</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container foot">
+        <div>
+          <strong style="color:#fff">DH Electrical Services</strong><br>
+          <span class="small">Coulsdon, Surrey &amp; surrounding areas &bull; Fully insured</span>
+        </div>
+        <div class="footLinks">
+          <a href="/services/">Services</a>
+          <a href="/areas/">Areas</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </div>
+        <div class="small">
+          &copy; <span id="y"></span> DH Electrical Services
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
