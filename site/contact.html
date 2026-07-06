@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DH Electrical Services | Electrician in Surrey</title>
-  <meta name="description" content="DH Electrical Services — domestic & small commercial electrical work. EICR, fault finding, consumer units, lighting and more. Covering Surrey & surrounding areas." />
+  <title>Contact | Get a Quote | DH Electrical Services</title>
+  <meta name="description" content="Get a quote from DH Electrical Services — call 07824 512 971, email d.high@dh-electrical.uk, or send the quick quote form. Coulsdon, Surrey & surrounding areas." />
 
   <style>
     :root{
@@ -41,6 +41,8 @@
       position:relative;
       isolation:isolate;
       overflow:hidden;
+      min-height:100vh;
+      display:flex;flex-direction:column;
       background:
         radial-gradient(1100px 620px at 80% 12%, rgba(43,212,110,.30), transparent 60%),
         radial-gradient(600px 380px at 68% 6%, rgba(59,234,128,.18), transparent 60%),
@@ -49,6 +51,7 @@
         radial-gradient(1000px 600px at 15% 8%, rgba(30,55,90,.35), transparent 65%),
         linear-gradient(180deg, #04070a, #060b0f 55%, #05090c);
     }
+    .cosmos > main{flex:1}
     .cosmos::before{ /* star field */
       content:"";
       position:absolute;inset:0;z-index:-1;
@@ -122,6 +125,7 @@
       font-size:15px;
     }
     nav a:hover{opacity:1;background:rgba(255,255,255,.06)}
+    nav a.active{opacity:1;color:var(--accentBright);background:rgba(43,212,110,.08)}
 
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -144,7 +148,7 @@
     }
     .btn.ghost:hover{border-color:var(--white);background:rgba(255,255,255,.08);transform:translateY(-1px)}
 
-    /* ---- Hero ---- */
+    /* ---- Hero (homepage) ---- */
     .hero{padding:72px 0 44px}
     .heroGrid{
       display:grid;
@@ -161,12 +165,17 @@
     .lead{
       margin:0;
       color:var(--muted);
-      max-width:52ch;
+      max-width:56ch;
       font-size:18px;
       line-height:1.7;
     }
     .heroCtas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
     .heroCtas .btn{padding:14px 26px;font-size:16px}
+
+    /* ---- Page hero (interior pages) ---- */
+    .pageHero{padding:56px 0 8px}
+    .pageHero h1{font-size:44px}
+    .pageHero .lead{font-size:17px}
 
     .chipGrid{
       display:grid;grid-template-columns:repeat(2, minmax(0,max-content));
@@ -242,6 +251,8 @@
     .accentText{color:var(--accentBright)}
 
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .card{
       background:var(--panel);
       border:1px solid var(--panelBorder);
@@ -261,6 +272,19 @@
     }
     .card h3{margin:0 0 8px;font-size:17px;color:var(--white)}
     .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
+    .card ul{
+      margin:12px 0 0;padding:0;list-style:none;
+      display:grid;gap:8px;
+    }
+    .card ul li{
+      color:var(--muted);font-size:14px;line-height:1.5;
+      padding-left:24px;position:relative;
+    }
+    .card ul li::before{
+      content:"\2713";
+      position:absolute;left:0;top:0;
+      color:var(--accentBright);font-weight:900;font-size:13px;
+    }
 
     .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .list{display:grid;gap:12px;margin-top:14px}
@@ -275,11 +299,39 @@
     }
 
     .price{color:var(--accentBright);font-weight:900}
+    .priceBig{font-size:30px;color:var(--accentBright);font-weight:900;letter-spacing:-.5px}
+
+    .priceTable{width:100%;border-collapse:collapse;margin-top:8px}
+    .priceTable th,.priceTable td{
+      text-align:left;padding:12px 6px;
+      border-bottom:1px solid rgba(255,255,255,.09);
+      font-size:15px;
+    }
+    .priceTable th{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+    .priceTable td:last-child,.priceTable th:last-child{text-align:right}
+    .priceTable tr:last-child td{border-bottom:none}
+
+    /* ---- CTA band ---- */
+    .ctaBand{
+      margin:8px 0 64px;
+      border-radius:22px;
+      border:1px solid var(--accentBorder);
+      background:
+        radial-gradient(600px 300px at 85% 0%, rgba(43,212,110,.22), transparent 60%),
+        linear-gradient(180deg, rgba(43,212,110,.10), rgba(255,255,255,.03));
+      padding:34px 36px;
+      display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+    }
+    .ctaBand h2{font-size:28px;margin:0 0 4px}
+    .ctaBand p{margin:0;color:var(--muted)}
+    .ctaBand .heroCtas{margin-top:0}
 
     /* ---- Contact ---- */
     .contactGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
     form{display:grid;gap:12px}
-    .card input,.card textarea{
+    .card input,.card textarea,
+    .wpcf7 input:not([type=submit]):not([type=checkbox]):not([type=radio]),
+    .wpcf7 textarea{
       width:100%;
       padding:13px 14px;border-radius:12px;
       border:1px solid rgba(255,255,255,.14);
@@ -288,9 +340,32 @@
       font:inherit;outline:none;
       transition:border-color .15s ease;
     }
-    .card input:focus,.card textarea:focus{border-color:var(--accent)}
-    .card input::placeholder,.card textarea::placeholder{color:rgba(255,255,255,.45)}
-    .card textarea{min-height:120px;resize:vertical}
+    .card input:focus,.card textarea:focus,
+    .wpcf7 input:focus,.wpcf7 textarea:focus{border-color:var(--accent)}
+    .card input::placeholder,.card textarea::placeholder,
+    .wpcf7 input::placeholder,.wpcf7 textarea::placeholder{color:rgba(255,255,255,.45)}
+    .card textarea,.wpcf7 textarea{min-height:120px;resize:vertical}
+
+    /* Contact Form 7 chrome */
+    .wpcf7 form{display:grid;gap:12px}
+    .wpcf7 p{margin:0}
+    .wpcf7 label{display:grid;gap:6px;font-size:13.5px;font-weight:700;color:var(--muted)}
+    .wpcf7 input[type=submit]{
+      width:100%;
+      padding:14px;border-radius:12px;border:none;cursor:pointer;
+      font:inherit;font-weight:800;font-size:16px;
+      background:linear-gradient(180deg, var(--accentBright), var(--accent));
+      color:#04110A;
+      box-shadow:0 8px 24px rgba(43,212,110,.30), inset 0 1px 0 rgba(255,255,255,.35);
+      transition:.15s ease;
+    }
+    .wpcf7 input[type=submit]:hover{background:var(--accentHover);transform:translateY(-1px)}
+    .wpcf7 .wpcf7-not-valid-tip{color:#FF8A8A;font-size:12.5px;margin-top:4px}
+    .wpcf7 .wpcf7-response-output{
+      margin:4px 0 0;padding:12px 14px;border-radius:12px;
+      border:1px solid var(--accentBorder);color:var(--text);font-size:14px;
+    }
+
     .note{font-size:12.5px;color:rgba(255,255,255,.5)}
     .contactCard{border-color:var(--accentBorder)!important;background:linear-gradient(180deg, rgba(43,212,110,.07), rgba(255,255,255,.03))}
 
@@ -301,26 +376,35 @@
       padding:28px 0 34px;
       border-top:1px solid rgba(255,255,255,.08);
     }
-    .foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+    .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+    .footLinks{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px}
+    .footLinks a{color:var(--muted);font-weight:700}
+    .footLinks a:hover{color:var(--accentBright)}
     .small{font-size:12.5px;color:rgba(255,255,255,.5)}
 
     @media (max-width: 960px){
       h1{font-size:40px}
+      .pageHero h1{font-size:34px}
       .heroGrid{grid-template-columns:1fr}
       .hero{padding:44px 0 28px}
       .trustStrip .container{grid-template-columns:repeat(2,1fr)}
       .grid3{grid-template-columns:1fr}
+      .grid4{grid-template-columns:1fr 1fr}
+      .grid2{grid-template-columns:1fr}
       .split{grid-template-columns:1fr}
       .contactGrid{grid-template-columns:1fr}
       .navlinks{display:none}
       .brand img{height:38px}
       .chipGrid{grid-template-columns:1fr 1fr}
       .chip{width:100%}
+      .ctaBand{padding:26px}
     }
     @media (max-width: 560px){
       .trustStrip .container{grid-template-columns:1fr}
       .chipGrid{grid-template-columns:1fr}
+      .grid4{grid-template-columns:1fr}
       h1{font-size:34px}
+      .pageHero h1{font-size:30px}
     }
   </style>
 </head>
@@ -346,220 +430,86 @@
     <!-- HEADER -->
     <header>
       <div class="container nav">
-        <a class="brand" href="#top" aria-label="DH Electrical Services — home">
+        <a class="brand" href="/" aria-label="DH Electrical Services — home">
           <img src="https://dh-electrical.uk/wp-content/uploads/2026/07/dh-electrical-logo.png" alt="DH Electrical Services" />
         </a>
 
         <nav class="navlinks" aria-label="Primary navigation">
-          <a href="#services">Services</a>
-          <a href="#areas">Areas</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="/services/">Services</a>
+          <a href="/areas/">Areas</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/about/">About</a>
+          <a href="/contact/" class="active">Contact</a>
         </nav>
 
-        <a class="btn primary" href="#contact">Get a Quote</a>
+        <a class="btn primary" href="/contact/">Get a Quote</a>
       </div>
     </header>
 
-    <!-- HERO -->
     <main>
-      <section class="hero">
-        <div class="container heroGrid">
-          <div>
-            <h1>Trusted Electrician<br>in Surrey</h1>
-            <p class="lead">
-              Reliable electrical work for homes and small businesses —
-              fault finding, consumer units, lighting upgrades, and
-              <strong style="color:var(--text)">EICR certificates</strong>.
-            </p>
 
-            <div class="heroCtas">
-              <a class="btn primary" href="#contact">Get a Quote</a>
-              <a class="btn ghost" href="tel:+447824512971">Call Now</a>
-            </div>
-
-            <div class="chipGrid">
-              <span class="chip"><span class="tick">&#10003;</span>Transparent pricing</span>
-              <span class="chip"><span class="tick">&#10003;</span>Tested &amp; certified</span>
-              <span class="chip"><span class="tick">&#10003;</span>Tidy finish</span>
-              <span class="chip"><span class="tick">&#10003;</span>Clear communication</span>
-            </div>
-          </div>
-
-          <div class="quoteCard">
-            <h3>Quick Quote <em>(1 minute)</em></h3>
-            <p>Send your postcode + a quick description (photos help). We&rsquo;ll reply with availability and a price.</p>
-            <div class="miniForm" role="form" aria-label="Quick quote form">
-              <input placeholder="Name" />
-              <input placeholder="Postcode" />
-              <textarea placeholder="What do you need done? (Add photos in WhatsApp if easier)"></textarea>
-              <a class="btn primary" href="#contact">Request Quote</a>
-              <div class="formNote">Prefer WhatsApp? Message photos to <a href="tel:+447824512971">07824 512 971</a></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TRUST STRIP -->
-      <div class="trustStrip">
+      <section class="pageHero">
         <div class="container">
-          <div class="trustItem"><span class="tick">&#10003;</span>Transparent pricing</div>
-          <div class="trustItem"><span class="tick">&#10003;</span>Tested &amp; certified</div>
-          <div class="trustItem"><span class="tick">&#10003;</span>Tidy finish</div>
-          <div class="trustItem"><span class="tick">&#10003;</span>Clear communication</div>
-        </div>
-      </div>
-
-      <!-- SERVICES -->
-      <section id="services">
-        <div class="container">
-          <div class="sectionHead">
-            <h2>Services</h2>
-            <p class="sub">Common jobs we handle day-to-day.</p>
-          </div>
-
-          <div class="grid3">
-            <div class="card">
-              <div class="icon">&#9889;</div>
-              <h3>Fault Finding &amp; Repairs</h3>
-              <p>Tripping circuits, dead sockets, flickering lights, and intermittent faults.</p>
-            </div>
-            <div class="card">
-              <div class="icon">&#128295;</div>
-              <h3>Consumer Units &amp; Rewires</h3>
-              <p>Board upgrades, RCBOs, partial/full rewires — neat, compliant installs.</p>
-            </div>
-            <div class="card">
-              <div class="icon">&#128196;</div>
-              <h3>EICR Certificates</h3>
-              <p>Landlord and homeowner EICRs with clear reporting and remedial options.</p>
-            </div>
-            <div class="card">
-              <div class="icon">&#128161;</div>
-              <h3>Lighting Installations</h3>
-              <p>Spotlights, pendants, LEDs, outdoor/security lighting, dimmers &amp; switching.</p>
-            </div>
-            <div class="card">
-              <div class="icon">&#128268;</div>
-              <h3>Sockets &amp; Small Works</h3>
-              <p>Additional sockets, kitchen electrics, extractor fans, showers and upgrades.</p>
-            </div>
-            <div class="card">
-              <div class="icon">&#128663;</div>
-              <h3>EV Chargers</h3>
-              <p>Home charger installations with assessment and tidy cable routes.</p>
-            </div>
-          </div>
+          <h1>Get a <span class="accentText">Quote</span></h1>
+          <p class="lead">
+            Send your postcode and a quick description — photos help a lot.
+            We&rsquo;ll reply with availability and a price, usually the same day.
+          </p>
         </div>
       </section>
 
-      <!-- AREAS + HOW IT WORKS -->
-      <section id="areas">
-        <div class="container split">
-          <div class="card">
-            <h2>Areas Covered</h2>
-            <p class="sub">Based locally — covering nearby areas for domestic &amp; small commercial work.</p>
-            <div class="list">
-              <div class="li"><span class="tick">&#10003;</span><div><strong>Epsom &bull; Ewell &bull; Banstead</strong></div></div>
-              <div class="li"><span class="tick">&#10003;</span><div><strong>Sutton &bull; Croydon &bull; Kingston</strong></div></div>
-              <div class="li"><span class="tick">&#10003;</span><div><strong>Leatherhead &bull; Surrey area</strong></div></div>
-            </div>
-          </div>
-
-          <div class="card" style="border-left:4px solid var(--accent)">
-            <h2>How it works</h2>
-            <div class="list">
-              <div class="li"><span class="stepNum">1</span><div><strong>Send details</strong><br><span class="sub">Message what you need + postcode + photos.</span></div></div>
-              <div class="li"><span class="stepNum">2</span><div><strong>Get a quote</strong><br><span class="sub">We confirm price and availability.</span></div></div>
-              <div class="li"><span class="stepNum">3</span><div><strong>Job done</strong><br><span class="sub">Tested, tidy finish, certified where required.</span></div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PRICING -->
-      <section id="pricing">
-        <div class="container">
-          <div class="sectionHead">
-            <h2>Pricing</h2>
-            <p class="sub">Clear starting prices — final quote depends on site conditions.</p>
-          </div>
-
-          <div class="grid3">
-            <div class="card">
-              <div class="icon">&pound;</div>
-              <h3>Day rate</h3>
-              <p><span class="price">&pound;400 / day</span> (domestic) — Surrey area.</p>
-            </div>
-            <div class="card">
-              <div class="icon">&#129534;</div>
-              <h3>EICR</h3>
-              <p>
-                Studio: <span class="price">&pound;200</span><br/>
-                1&ndash;2 bed: <span class="price">&pound;250</span><br/>
-                3&ndash;4 bed: <span class="price">&pound;300</span><br/>
-                5 bed: <span class="price">&pound;350+</span>
-              </p>
-            </div>
-            <div class="card">
-              <div class="icon">&#9989;</div>
-              <h3>Small jobs</h3>
-              <p>Quoted upfront once we&rsquo;ve seen details/photos. No surprises.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABOUT -->
-      <section id="about">
-        <div class="container split">
-          <div class="card">
-            <h2>About <span class="accentText">DH</span></h2>
-            <p class="sub">
-              Professional electrical work with a focus on safety, reliability, and a clean finish.
-              You&rsquo;ll get clear options, tidy workmanship, and certificates where required.
-            </p>
-            <div class="list">
-              <div class="li"><span class="tick">&#10003;</span><div>Fully insured</div></div>
-              <div class="li"><span class="tick">&#10003;</span><div>Tested &amp; certified</div></div>
-              <div class="li"><span class="tick">&#10003;</span><div>Respectful, tidy work in occupied homes</div></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h2>Recent work</h2>
-            <p class="sub">A selection of recent installs — consumer units, lighting, neat trunking.</p>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
-              <div style="height:96px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.03)"></div>
-              <div style="height:96px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.03)"></div>
-              <div style="height:96px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.03)"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section id="contact">
+      <section>
         <div class="container contactGrid">
           <div class="card">
-            <h2>Get a Quote</h2>
-            <p class="sub" style="margin-bottom:14px">Fill this in and we&rsquo;ll get back to you ASAP.</p>
-            <form>
-              <input placeholder="Full name" />
-              <input placeholder="Phone number" />
-              <input placeholder="Postcode" />
-              <textarea placeholder="What do you need done? (Include any deadline)"></textarea>
-              <a class="btn primary" href="mailto:d.high@dh-electrical.uk">Email Request</a>
-            </form>
+            <h2>Quick Quote</h2>
+            <p class="sub" style="margin-bottom:14px">Takes about a minute. We&rsquo;ll get back to you ASAP.</p>
+
+            <!-- Contact Form 7 (ID 20) renders here when deployed to WordPress -->
+            <div class="wpcf7-wrap">
+              [contact-form-7 id="20" title="Quick Quote"]
+            </div>
+
+            <p class="note" style="margin-top:14px">
+              Prefer not to use the form? Email
+              <a href="mailto:d.high@dh-electrical.uk" style="color:var(--accentBright);font-weight:700">d.high@dh-electrical.uk</a>
+              or message photos on WhatsApp to
+              <a href="tel:+447824512971" style="color:var(--accentBright);font-weight:700">07824 512 971</a>.
+            </p>
           </div>
 
-          <div class="card contactCard">
-            <h2>Contact</h2>
-            <div class="list">
-              <div class="li"><span class="stepNum">&#9743;</span><div><strong>Phone</strong><br><a href="tel:+447824512971">07824 512 971</a></div></div>
-              <div class="li"><span class="stepNum">@</span><div><strong>Email</strong><br><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></div></div>
-              <div class="li"><span class="stepNum">&#9201;</span><div><strong>Hours</strong><br><span class="sub">Mon&ndash;Sat: 8am&ndash;6pm</span></div></div>
+          <div style="display:grid;gap:16px;align-content:start">
+            <div class="card contactCard">
+              <h2>Contact details</h2>
+              <div class="list">
+                <div class="li"><span class="stepNum">&#9743;</span><div><strong>Phone</strong><br><a href="tel:+447824512971">07824 512 971</a></div></div>
+                <div class="li"><span class="stepNum">@</span><div><strong>Email</strong><br><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></div></div>
+                <div class="li"><span class="stepNum">&#9201;</span><div><strong>Hours</strong><br><span class="sub">Mon&ndash;Sat: 8am&ndash;6pm</span></div></div>
+                <div class="li"><span class="stepNum">&#9906;</span><div><strong>Based in</strong><br><span class="sub">Coulsdon — covering Surrey &amp; surrounding areas</span></div></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 style="font-size:18px">What to include</h3>
+              <ul>
+                <li>Your postcode</li>
+                <li>What you need done (a sentence is fine)</li>
+                <li>Photos of the fuse board / area if you can</li>
+                <li>Any deadline — e.g. a tenancy start date</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding-top:0;padding-bottom:72px">
+        <div class="container">
+          <div class="card" style="border-left:4px solid var(--accent)">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between">
+              <div>
+                <h3 style="font-size:20px">&#128680; Urgent problem?</h3>
+                <p>No power, a board that won&rsquo;t reset, or something that smells hot — call rather than wait on the form.</p>
+              </div>
+              <a class="btn primary" href="tel:+447824512971">Call 07824 512 971</a>
             </div>
           </div>
         </div>
@@ -570,10 +520,17 @@
       <div class="container foot">
         <div>
           <strong style="color:#fff">DH Electrical Services</strong><br>
-          <span class="small">Surrey &amp; surrounding areas &bull; Fully insured</span>
+          <span class="small">Coulsdon, Surrey &amp; surrounding areas &bull; Fully insured</span>
+        </div>
+        <div class="footLinks">
+          <a href="/services/">Services</a>
+          <a href="/areas/">Areas</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
         </div>
         <div class="small">
-          &copy; <span id="y"></span> DH Electrical Services &bull; Privacy Policy &bull; Terms
+          &copy; <span id="y"></span> DH Electrical Services
         </div>
       </div>
     </footer>
