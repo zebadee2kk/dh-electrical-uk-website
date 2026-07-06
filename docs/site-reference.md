@@ -33,7 +33,7 @@
 - **Tagline:** Trusted Electrician in Surrey
 - **Colors:** Dark background (#0a0a0a), green accent (#00aa55), silver metallic
 - **Phone:** 07824 512 971
-- **Email:** d.high@dh-electrical.uk
+- **Email:** d.hill@dh-electrical.uk
 - **Areas:** Coulsdon, Surrey and surrounding areas
 
 ## Services Listed
@@ -62,7 +62,29 @@
 
 - No n8n pipeline configured yet
 - WP Mail SMTP on PHP mail — should be upgraded to SMTP for reliable form delivery
-- Quick Quote form via Contact Form 7 (ID: 20) — sends to d.high@dh-electrical.uk
+- Quick Quote form via Contact Form 7 (ID: 20) — sends to d.hill@dh-electrical.uk
+
+## Current Rendering Approach
+
+- The live site is rendered through a custom Astra page template: `dh-electrical-full-html.php`
+- The template serves the HTML files from `wp-content/themes/astra/dh-electrical-pages/`
+- `do_shortcode()` is applied at render time so Contact Form 7 shortcodes expand correctly
+- The deploy script updates the page template assignment and refreshes both WP cache and WP Super Cache
+
+## Backup / Rollback Bundle
+
+Latest known-good bundle on vps02:
+
+- DB export: `/var/backups/dh-electrical/db-20260706-234040.sql`
+- Theme backup: `/var/backups/dh-electrical/astra-theme-20260706-234040.tar.gz`
+- Site/meta backup: `/var/backups/dh-electrical/site-meta-20260706-234040.tar.gz`
+
+Rollback sequence:
+
+1. Restore theme files from the tarball.
+2. Import the database export if content needs to be reverted.
+3. Flush WP cache and clear `/wp-content/cache/supercache/`.
+4. Run `wp rewrite flush` and verify all six public pages.
 
 ## Security Hardening
 

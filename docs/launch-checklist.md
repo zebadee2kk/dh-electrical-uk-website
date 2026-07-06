@@ -15,10 +15,11 @@
 - [x] **GoDaddy DNS** — A records set for @ and www to 145.241.209.163
 - [x] **Site smoke-tested** — all 6 pages return HTTP 200
 - [x] **Full-site redesign** — all 6 pages rebuilt in the dark cosmic theme (`site/`), deployable via `site/deploy.sh`
+- [x] **Rollback bundle created** — database export plus theme/template backups captured in `/var/backups/dh-electrical/`
 
 ## ⏳ Remaining / Future
 
-- [ ] **WP Mail SMTP** — Upgrade from PHP mail to proper SMTP (Mailu, SendGrid, or similar) for reliable contact form delivery
+- [ ] **WP Mail SMTP** — Confirm SMTP settings are configured correctly for reliable contact form delivery
 - [ ] **WP Super Cache** — Verify cache is working on live HTTPS (may need manual cache prime)
 - [ ] **Yoast SEO** — Configure meta titles, descriptions, XML sitemap, social previews
 - [ ] **Google Search Console** — Submit sitemap for indexing

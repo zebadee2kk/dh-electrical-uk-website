@@ -50,8 +50,8 @@ reference is the logo, already in the WP media library:
 - [ ] **Contact form works**: `/contact/` embeds `[contact-form-7 id="20"
       title="Quick Quote"]`. WordPress expands it at render time; the page CSS
       styles the CF7 fields to match the theme. Submit a test message and
-      confirm it arrives at d.high@dh-electrical.uk (WP Mail SMTP is still on
-      PHP mail — see launch checklist).
+      confirm it arrives at d.hill@dh-electrical.uk (verify SMTP settings before
+      treating mail delivery as fully hardened).
 - [ ] **Logo renders** in the nav on all pages (media upload from July 2026).
 - [ ] **Nav links** between pages work (`/services/`, `/areas/`, `/pricing/`,
       `/about/`, `/contact/` — permalinks must be pretty, they already are).
@@ -70,9 +70,9 @@ reference is the logo, already in the WP media library:
 
 ## Rollback
 
-Previous page content lives in WordPress post revisions:
-```bash
-sudo -u www-data wp post list --post_type=revision --post_parent=6   # find revision
-sudo -u www-data wp post update 6 --post_content="$(sudo -u www-data wp post get <REV_ID> --field=post_content)"
-```
-(Repeat per page ID; then purge caches as above.)
+Use the known-good backup bundle documented in `docs/backup-rollback-plan.md`:
+
+1. Restore the Astra theme backup first.
+2. Import the database export only if page content or template assignments need to roll back.
+3. Flush caches and permalinks.
+4. Verify all six pages.

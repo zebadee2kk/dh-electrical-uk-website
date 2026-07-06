@@ -2,7 +2,8 @@
 
 The complete dh-electrical.uk frontend: six standalone HTML pages sharing one dark
 "cosmic" theme. Each file is self-contained (inline CSS, no build step, no external
-assets except the logo already uploaded to WordPress).
+assets except the logo already uploaded to WordPress). The live site uses a custom
+Astra page template (`dh-electrical-full-html.php`) to serve these files directly.
 
 ## Pages
 
@@ -24,8 +25,8 @@ this repo:
 ./site/deploy.sh
 ```
 
-That injects each HTML file into its WordPress page via wp-cli and flushes the
-caches. To deploy a single page manually:
+That copies the HTML pages and the custom template into Astra, assigns the template
+to the six pages, and flushes the caches. To deploy a single page manually:
 
 ```bash
 cd /var/www/dh-electrical.uk
@@ -34,14 +35,12 @@ sudo -u www-data wp post update 7 --post_content="$(cat /path/to/site/services.h
 
 ### Post-deploy checks
 
-- All six URLs return 200 and render the dark theme (no white Astra chrome).
-  If Astra's own header/footer appears around the content, set each page's
-  template to **Elementor/Astra "Blank" / full-width, no header-footer** in
-  the page editor (Page Attributes → Template).
+- All six URLs return 200 and render the dark theme with no Astra chrome.
 - The contact page form works: `contact.html` embeds the Contact Form 7
   shortcode `[contact-form-7 id="20" title="Quick Quote"]`, which WordPress
-  expands at render time. The page CSS styles the CF7 fields to match the theme.
-  If the form ID ever changes, update the shortcode in `contact.html`.
+  expands at render time via the custom template. The page CSS styles the CF7
+  fields to match the theme. If the form ID ever changes, update the shortcode
+  in `contact.html`.
 - Logo renders — all pages reference the WordPress media upload
   `https://dh-electrical.uk/wp-content/uploads/2026/07/dh-electrical-logo.png`
   (source of truth: `assets/logo.png` in this repo).
@@ -64,3 +63,9 @@ The pages share their chrome and CSS by construction. When changing anything
 shared (nav, footer, colors, CSS), apply the same change to **all six files** —
 they must stay in lockstep. Page-specific content lives inside each file's
 `<main>` element.
+
+## Rollback safety
+
+- Known-good backup bundle is documented in `docs/backup-rollback-plan.md`
+- If anything breaks, restore the Astra theme backup first — it includes the
+  page-template bridge and copied HTML pages

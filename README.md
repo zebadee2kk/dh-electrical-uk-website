@@ -17,8 +17,9 @@ Website for DH Electrical Services — a trusted electrician based in Coulsdon, 
 
 | File | Purpose |
 |------|---------|
-| `site/` | **The full site** — all six page HTML files + deploy script (see `site/README.md`) |
-| `docs/site-reference.md` | Infrastructure, access, and brand reference |
+| `site/` | **The full site** — all six page HTML files + deploy script + custom template (see `site/README.md`) |
+| `docs/site-reference.md` | Infrastructure, access, brand reference, and rollback bundle |
+| `docs/backup-rollback-plan.md` | Backup files and rollback steps |
 | `config/nginx-site.conf` | Production Nginx vhost config |
 | `assets/logo.png` | Site logo (DH Electrical Services brand mark) |
 | `docs/launch-checklist.md` | What's done and what remains |
@@ -33,4 +34,4 @@ To deploy all pages into WordPress, run on vps02 from a checkout of this repo:
 ./site/deploy.sh
 ```
 
-See `site/README.md` for the page → WordPress ID mapping and post-deploy checks.
+See `site/README.md` for the page → WordPress ID mapping, render approach, and post-deploy checks.
