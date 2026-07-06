@@ -19,7 +19,7 @@
 
 ## ⏳ Remaining / Future
 
-- [ ] **WP Mail SMTP** — Confirm SMTP settings are configured correctly for reliable contact form delivery
+- [ ] **WP Mail SMTP** — Update sender config from `d.high@dh-electrical.uk` and switch off PHP mail if you want hardened delivery
 - [ ] **WP Super Cache** — Verify cache is working on live HTTPS (may need manual cache prime)
 - [ ] **Yoast SEO** — Configure meta titles, descriptions, XML sitemap, social previews
 - [ ] **Google Search Console** — Submit sitemap for indexing

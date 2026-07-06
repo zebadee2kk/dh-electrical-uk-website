@@ -61,7 +61,8 @@
 ## Automation / Content OS
 
 - No n8n pipeline configured yet
-- WP Mail SMTP on PHP mail — should be upgraded to SMTP for reliable form delivery
+- No additional plugins are currently needed for the live site
+- WP Mail SMTP is already installed and active, but its sender settings still point at `d.high@dh-electrical.uk` and mailer is set to `mail`; update config only if you want to harden delivery
 - Quick Quote form via Contact Form 7 (ID: 20) — sends to d.hill@dh-electrical.uk
 
 ## Current Rendering Approach
