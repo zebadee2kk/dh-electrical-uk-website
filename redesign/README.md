@@ -4,15 +4,16 @@ Complete frontend rebuild of the dh-electrical.uk homepage.
 
 ## Design
 
-- **Theme:** Premium dark with cosmic nebula background (animated star-drift particles)
-- **Primary green:** `#00cc66` — bright electric green for CTAs, accents
-- **Typography:** Archivo (headings) + Karla (body) — technical yet approachable
-- **Layout:** Hero split (left text + right quote form), features strip, 2-col services grid, area pills, contact strip
+- **Theme:** Full dark "cosmic" theme — deep space background with green nebula glows, CSS star field, and a sweeping green light arc across the mid-page
+- **Primary green:** `#2BD46E` (hover `#25BA60`, bright `#3BEA80`) — electric green for CTAs, ticks, accents
+- **Typography:** System font stack (fast, no webfont requests)
+- **Layout:** Top utility bar → sticky dark nav (full logo image) → hero split (headline + CTAs + trust chips left, Quick Quote card right) → trust strip → services grid → areas/how-it-works → pricing → about/recent work → contact → footer
+- All sections dark glassmorphism cards (`rgba(255,255,255,.045)` panels with subtle borders); no light sections
 
 ## Structure
 
 ```
-dh-homepage-redesign.html    → Full homepage HTML + inline CSS
+dh-homepage.html             → Full homepage HTML + inline CSS
 assets/logo.png              → DH Electrical Services logo
 ```
 

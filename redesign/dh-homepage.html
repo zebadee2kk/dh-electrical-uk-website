@@ -8,19 +8,21 @@
 
   <style>
     :root{
-      --primary:#111317;      /* Charcoal */
-      --accent:#25C266;       /* Electric green */
-      --accentHover:#1FA856;  /* Hover green */
+      --bg:#05080c;            /* Deep space black */
+      --bg2:#080d12;
+      --panel:rgba(255,255,255,.045);
+      --panelBorder:rgba(255,255,255,.10);
+      --accent:#2BD46E;        /* Electric green */
+      --accentBright:#3BEA80;
+      --accentHover:#25BA60;
+      --accentDim:rgba(43,212,110,.14);
+      --accentBorder:rgba(43,212,110,.30);
       --white:#FFFFFF;
-      --light:#F4F6F8;        /* Light background */
-      --border:#E5E7EB;
-      --muted:#94A3B8;
-      --text:#0F172A;
-
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.62);
       --radius:18px;
-      --shadow: 0 14px 40px rgba(2,6,23,.08);
-      --shadowDark: 0 18px 60px rgba(0,0,0,.35);
-      --container: min(1120px, 92%);
+      --shadowDark:0 18px 60px rgba(0,0,0,.45);
+      --container:min(1160px, 92%);
     }
 
     *{box-sizing:border-box}
@@ -28,483 +30,554 @@
     body{
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
       color:var(--text);
-      background:var(--light);
+      background:var(--bg);
       line-height:1.5;
     }
     a{color:inherit;text-decoration:none}
     .container{width:var(--container);margin:0 auto}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:rgba(255,255,255,.92);
-      font-size:13px;font-weight:700;
+
+    /* ---- Cosmic backdrop: nebula glows + star field ---- */
+    .cosmos{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      background:
+        radial-gradient(1100px 620px at 80% 12%, rgba(43,212,110,.30), transparent 60%),
+        radial-gradient(600px 380px at 68% 6%, rgba(59,234,128,.18), transparent 60%),
+        radial-gradient(700px 420px at 62% 74%, rgba(43,212,110,.12), transparent 60%),
+        radial-gradient(900px 520px at 8% 88%, rgba(43,212,110,.08), transparent 60%),
+        radial-gradient(1000px 600px at 15% 8%, rgba(30,55,90,.35), transparent 65%),
+        linear-gradient(180deg, #04070a, #060b0f 55%, #05090c);
+    }
+    .cosmos::before{ /* star field */
+      content:"";
+      position:absolute;inset:0;z-index:-1;
+      background-image:
+        radial-gradient(1.4px 1.4px at 22% 18%, rgba(255,255,255,.85), transparent 55%),
+        radial-gradient(1px 1px at 68% 8%, rgba(255,255,255,.7), transparent 55%),
+        radial-gradient(1.6px 1.6px at 84% 42%, rgba(255,255,255,.8), transparent 55%),
+        radial-gradient(1px 1px at 42% 62%, rgba(255,255,255,.55), transparent 55%),
+        radial-gradient(1.3px 1.3px at 12% 48%, rgba(255,255,255,.6), transparent 55%),
+        radial-gradient(1px 1px at 55% 32%, rgba(255,255,255,.65), transparent 55%),
+        radial-gradient(1.5px 1.5px at 92% 78%, rgba(255,255,255,.7), transparent 55%),
+        radial-gradient(1px 1px at 33% 88%, rgba(255,255,255,.5), transparent 55%),
+        radial-gradient(1.2px 1.2px at 74% 62%, rgba(255,255,255,.6), transparent 55%),
+        radial-gradient(1px 1px at 6% 72%, rgba(255,255,255,.5), transparent 55%);
+      background-size:820px 620px;
+      background-repeat:repeat;
+      opacity:.85;
+    }
+    .cosmos::after{ /* sweeping green light arc */
+      content:"";
+      position:absolute;z-index:-1;
+      left:-15%;right:-15%;bottom:-42%;height:80%;
+      border-radius:50%;
+      border-top:2px solid rgba(59,234,128,.35);
+      box-shadow:0 -30px 90px rgba(43,212,110,.25), 0 -6px 24px rgba(59,234,128,.30);
+      filter:blur(1px);
+      pointer-events:none;
     }
 
-    /* Top bar */
+    /* ---- Top utility bar ---- */
     .topbar{
-      background:var(--primary);
-      color:var(--white);
-      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(4,7,10,.85);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      font-size:13px;
+      color:var(--muted);
+      position:relative;z-index:60;
     }
     .topbar .container{
-      display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-      padding:10px 0;
-      font-size:13px;
-      color:rgba(255,255,255,.88);
+      display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+      padding:9px 0;
     }
-    .topbar a{color:rgba(255,255,255,.92);font-weight:700}
+    .topbar a{color:var(--text);font-weight:700}
+    .topbar a:hover{color:var(--accentBright)}
+    .topbar .dot{opacity:.45;margin:0 6px}
+    .tbIcon{color:var(--accent);margin-right:6px}
+    .tbRight{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 
-    /* Header */
+    /* ---- Header / nav ---- */
     header{
       position:sticky;top:0;z-index:50;
-      background:rgba(244,246,248,.86);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--border);
+      background:rgba(5,8,12,.82);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
     .nav{
       display:flex;align-items:center;justify-content:space-between;gap:16px;
-      padding:14px 0;
+      padding:12px 0;
     }
-    .brand{
-      display:flex;align-items:center;gap:12px;
-      min-width: 240px;
+    .brand{display:flex;align-items:center}
+    .brand img{
+      height:46px;width:auto;display:block;
+      filter:drop-shadow(0 2px 10px rgba(0,0,0,.5));
     }
-    .brand .mark{
-      width:52px;height:40px;border-radius:12px;
-      display:grid;place-items:center;
-      background:linear-gradient(135deg, rgba(37,194,102,.18), rgba(37,194,102,.06));
-      border:1px solid rgba(37,194,102,.25);
-      overflow:hidden;
-    }
-    .brand .mark img{
-      width:100%;height:100%;object-fit:contain; padding:4px; background:#fff;
-      display:block;
-    }
-    .brand .name{font-weight:900;letter-spacing:.2px;line-height:1.05}
-    .brand .tag{font-size:12px;color:#475569;font-weight:700;margin-top:2px}
-
+    .navlinks{display:flex;gap:4px;align-items:center}
     nav a{
-      font-weight:800;
-      color:#0B1220;
-      opacity:.78;
-      padding:10px 10px;border-radius:12px;
+      font-weight:700;
+      color:var(--text);
+      opacity:.82;
+      padding:10px 14px;border-radius:12px;
+      font-size:15px;
     }
-    nav a:hover{opacity:1;background:#fff;border:1px solid var(--border)}
-    .navlinks{display:flex;gap:6px;align-items:center}
+    nav a:hover{opacity:1;background:rgba(255,255,255,.06)}
 
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:12px 16px;border-radius:14px;
-      font-weight:900;cursor:pointer;
+      padding:12px 20px;border-radius:12px;
+      font-weight:800;cursor:pointer;font-size:15px;
       border:1px solid transparent;
       transition:.15s ease;
       white-space:nowrap;
     }
     .btn.primary{
-      background:var(--accent);
-      color:#08110D;
-      box-shadow:0 14px 26px rgba(37,194,102,.22);
+      background:linear-gradient(180deg, var(--accentBright), var(--accent));
+      color:#04110A;
+      box-shadow:0 8px 24px rgba(43,212,110,.30), inset 0 1px 0 rgba(255,255,255,.35);
     }
     .btn.primary:hover{background:var(--accentHover);transform:translateY(-1px)}
     .btn.ghost{
-      background:#fff;border-color:var(--border);color:#0B1220;
-    }
-    .btn.ghost:hover{transform:translateY(-1px)}
-
-    /* Hero */
-    .hero{
-      background: radial-gradient(1200px 500px at 20% -10%, rgba(37,194,102,.22), transparent 60%),
-                  radial-gradient(900px 420px at 90% 10%, rgba(0,0,0,.28), transparent 65%),
-                  linear-gradient(180deg, #0D1117, var(--primary));
+      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.35);
       color:var(--white);
-      padding:44px 0 26px;
     }
+    .btn.ghost:hover{border-color:var(--white);background:rgba(255,255,255,.08);transform:translateY(-1px)}
+
+    /* ---- Hero ---- */
+    .hero{padding:72px 0 44px}
     .heroGrid{
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:18px;
-      align-items:stretch;
+      grid-template-columns:1.15fr .85fr;
+      gap:36px;
+      align-items:center;
     }
-    .heroCard{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--radius);
-      box-shadow:var(--shadowDark);
+    h1{
+      margin:0 0 18px;
+      font-size:56px;line-height:1.05;letter-spacing:-1px;
+      color:var(--white);
+      text-shadow:0 4px 30px rgba(0,0,0,.5);
     }
-    .heroLeft{padding:28px}
-    h1{margin:0 0 10px;font-size:44px;line-height:1.06;letter-spacing:-.6px}
     .lead{
       margin:0;
-      color:rgba(255,255,255,.82);
-      max-width: 60ch;
-      font-size:16px;
-      line-height:1.65;
+      color:var(--muted);
+      max-width:52ch;
+      font-size:18px;
+      line-height:1.7;
     }
-    .heroCtas{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .trustRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .heroCtas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+    .heroCtas .btn{padding:14px 26px;font-size:16px}
 
-    .heroRight{padding:16px}
-    .quoteBox{
-      height:100%;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(circle at 20% 15%, rgba(37,194,102,.18), transparent 48%),
-        radial-gradient(circle at 85% 25%, rgba(255,255,255,.08), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      padding:18px;
-      display:flex;flex-direction:column;gap:12px;
+    .chipGrid{
+      display:grid;grid-template-columns:repeat(2, minmax(0,max-content));
+      gap:12px;margin-top:28px;
     }
-    .quoteBox h3{margin:0;font-size:16px;letter-spacing:.2px}
-    .quoteBox p{margin:0;color:rgba(255,255,255,.78);font-size:14px;line-height:1.55}
-    .miniForm{display:grid;gap:10px;margin-top:auto}
+    .chip{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:11px 18px;border-radius:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:700;font-size:15px;color:var(--text);
+      backdrop-filter:blur(4px);
+    }
+    .tick{
+      width:22px;height:22px;border-radius:50%;
+      border:2px solid var(--accent);
+      display:inline-grid;place-items:center;
+      color:var(--accent);font-weight:900;font-size:12px;flex:0 0 auto;
+      line-height:1;
+    }
+
+    /* Quote card */
+    .quoteCard{
+      background:linear-gradient(180deg, rgba(16,24,22,.92), rgba(10,16,14,.92));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      box-shadow:var(--shadowDark), inset 0 1px 0 rgba(255,255,255,.06);
+      padding:26px;
+      backdrop-filter:blur(8px);
+    }
+    .quoteCard h3{
+      margin:0 0 10px;font-size:22px;color:var(--white);letter-spacing:-.2px;
+    }
+    .quoteCard h3 em{font-style:normal;color:var(--accentBright);font-weight:800}
+    .quoteCard > p{
+      margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.6;
+    }
+    .miniForm{display:grid;gap:12px}
     .miniForm input, .miniForm textarea{
       width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.20);
+      padding:13px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.35);
       color:var(--white);
-      font:inherit;
+      font:inherit;font-size:15px;
       outline:none;
+      transition:border-color .15s ease;
     }
-    .miniForm input::placeholder,.miniForm textarea::placeholder{color:rgba(255,255,255,.55)}
-    .miniForm textarea{min-height:92px;resize:vertical}
+    .miniForm input:focus, .miniForm textarea:focus{border-color:var(--accent)}
+    .miniForm input::placeholder,.miniForm textarea::placeholder{color:rgba(255,255,255,.45)}
+    .miniForm textarea{min-height:96px;resize:vertical}
+    .miniForm .btn{width:100%;padding:14px;font-size:16px}
+    .formNote{font-size:12.5px;color:rgba(255,255,255,.5);text-align:center;margin-top:2px}
+    .formNote a{color:var(--accentBright);font-weight:700}
 
-    /* Main sections */
-    section{padding:28px 0}
-    .sectionHead{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
-      margin-bottom:14px;
+    /* ---- Trust strip ---- */
+    .trustStrip{padding:34px 0 56px}
+    .trustStrip .container{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
     }
-    h2{margin:0;font-size:26px;letter-spacing:-.2px}
-    .sub{margin:0;color:#64748B}
+    .trustItem{
+      display:flex;align-items:center;gap:12px;
+      font-weight:800;font-size:17px;color:var(--white);
+    }
+    .trustItem .tick{width:26px;height:26px;font-size:14px}
 
-    .grid3{display:grid;grid-template-columns:repeat(3, 1fr);gap:14px}
+    /* ---- Sections ---- */
+    section{padding:56px 0}
+    .sectionHead{margin-bottom:26px}
+    h2{margin:0 0 6px;font-size:34px;letter-spacing:-.5px;color:var(--white)}
+    .sub{margin:0;color:var(--muted);font-size:16px}
+    .accentText{color:var(--accentBright)}
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .card{
-      background:#fff;
-      border:1px solid var(--border);
+      background:var(--panel);
+      border:1px solid var(--panelBorder);
       border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
+      padding:22px;
+      transition:.15s ease;
     }
+    .card:hover{border-color:var(--accentBorder);transform:translateY(-2px)}
     .icon{
-      width:46px;height:46px;border-radius:16px;
-      background:rgba(37,194,102,.12);
-      border:1px solid rgba(37,194,102,.22);
+      width:48px;height:48px;border-radius:14px;
+      background:var(--accentDim);
+      border:1px solid var(--accentBorder);
       display:grid;place-items:center;
-      font-weight:1000;
-      color:var(--accent);
-      margin-bottom:8px;
+      font-size:20px;
+      color:var(--accentBright);
+      margin-bottom:12px;
     }
-    .card h3{margin:0 0 6px;font-size:16px}
-    .card p{margin:0;color:#64748B;font-size:14px;line-height:1.55}
+    .card h3{margin:0 0 8px;font-size:17px;color:var(--white)}
+    .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
 
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .list{display:grid;gap:10px;margin-top:10px}
-    .li{display:flex;gap:10px;align-items:flex-start}
-    .tick{
-      width:22px;height:22px;border-radius:7px;
-      background:rgba(37,194,102,.12);
-      border:1px solid rgba(37,194,102,.22);
-      display:grid;place-items:center;color:var(--accent);font-weight:900;flex:0 0 auto
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .list{display:grid;gap:12px;margin-top:14px}
+    .li{display:flex;gap:12px;align-items:flex-start}
+    .li strong{color:var(--white)}
+    .stepNum{
+      width:26px;height:26px;border-radius:50%;
+      background:var(--accentDim);
+      border:1px solid var(--accentBorder);
+      display:grid;place-items:center;color:var(--accentBright);
+      font-weight:900;font-size:13px;flex:0 0 auto;
     }
 
-    /* Contact block */
-    .contactGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
-    form{display:grid;gap:10px}
-    input,textarea{
+    .price{color:var(--accentBright);font-weight:900}
+
+    /* ---- Contact ---- */
+    .contactGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    form{display:grid;gap:12px}
+    .card input,.card textarea{
       width:100%;
-      padding:12px 12px;border-radius:14px;border:1px solid var(--border);
-      font:inherit;background:#fff;outline:none
+      padding:13px 14px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.30);
+      color:var(--white);
+      font:inherit;outline:none;
+      transition:border-color .15s ease;
     }
-    textarea{min-height:120px;resize:vertical}
-    .note{font-size:12px;color:#64748B}
+    .card input:focus,.card textarea:focus{border-color:var(--accent)}
+    .card input::placeholder,.card textarea::placeholder{color:rgba(255,255,255,.45)}
+    .card textarea{min-height:120px;resize:vertical}
+    .note{font-size:12.5px;color:rgba(255,255,255,.5)}
+    .contactCard{border-color:var(--accentBorder)!important;background:linear-gradient(180deg, rgba(43,212,110,.07), rgba(255,255,255,.03))}
 
+    /* ---- Footer ---- */
     footer{
-      background: #0B0F14;
-      color:rgba(255,255,255,.80);
-      padding:22px 0 30px;
-      margin-top:10px;
+      background:rgba(3,5,8,.9);
+      color:var(--muted);
+      padding:28px 0 34px;
       border-top:1px solid rgba(255,255,255,.08);
     }
-    .foot{
-      display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap
-    }
-    .small{font-size:12px;color:rgba(255,255,255,.65)}
-    .accentText{color:var(--accent);font-weight:900}
+    .foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+    .small{font-size:12.5px;color:rgba(255,255,255,.5)}
 
-    @media (max-width: 920px){
+    @media (max-width: 960px){
+      h1{font-size:40px}
       .heroGrid{grid-template-columns:1fr}
-      h1{font-size:36px}
+      .hero{padding:44px 0 28px}
+      .trustStrip .container{grid-template-columns:repeat(2,1fr)}
       .grid3{grid-template-columns:1fr}
       .split{grid-template-columns:1fr}
       .contactGrid{grid-template-columns:1fr}
       .navlinks{display:none}
-      .brand{min-width:auto}
+      .brand img{height:38px}
+      .chipGrid{grid-template-columns:1fr 1fr}
+      .chip{width:100%}
+    }
+    @media (max-width: 560px){
+      .trustStrip .container{grid-template-columns:1fr}
+      .chipGrid{grid-template-columns:1fr}
+      h1{font-size:34px}
     }
   </style>
 </head>
 
 <body>
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="container">
-      <div>Surrey & surrounding areas • Fully insured • Quick quotes</div>
-      <div>
-        <a href="tel:+447824512971">Call: 07824 512 971</a> &nbsp;|&nbsp;
-        <a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a>
+  <div class="cosmos" id="top">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="container">
+        <div>
+          <span class="tbIcon">&#9906;</span>Surrey &amp; surrounding areas
+          <span class="dot">&bull;</span><strong style="color:var(--text)">Fully insured</strong>
+          <span class="dot">&bull;</span>Quick quotes
+        </div>
+        <div class="tbRight">
+          <span><span class="tbIcon">&#9743;</span><a href="tel:+447824512971">Call: 07824 512 971</a></span>
+          <span><span class="tbIcon">&#9993;</span><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#top">
-        <div class="mark" aria-hidden="true">
-          <!-- Replace this with your logo file path, e.g. images/logo.png -->
-          <!-- If you want it to "fit" instead of "cover", change object-fit to contain in CSS -->
-          <img src="https://dh-electrical.uk/wp-content/uploads/2026/07/dh-electrical-logo.png" alt="DH Electrical Services logo">
-        </div>
-        <div>
-          <div class="name">DH Electrical Services</div>
-          <div class="tag">Domestic • Commercial • EICR</div>
-        </div>
-      </a>
+    <!-- HEADER -->
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#top" aria-label="DH Electrical Services — home">
+          <img src="https://dh-electrical.uk/wp-content/uploads/2026/07/dh-electrical-logo.png" alt="DH Electrical Services" />
+        </a>
 
-      <nav class="navlinks" aria-label="Primary navigation">
-        <a href="#services">Services</a>
-        <a href="#areas">Areas</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
+        <nav class="navlinks" aria-label="Primary navigation">
+          <a href="#services">Services</a>
+          <a href="#areas">Areas</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
 
-      <a class="btn primary" href="#contact">Get a Quote</a>
-    </div>
-  </header>
+        <a class="btn primary" href="#contact">Get a Quote</a>
+      </div>
+    </header>
 
-  <!-- HERO -->
-  <main id="top">
-    <section class="hero">
-      <div class="container heroGrid">
-        <div class="heroCard heroLeft">
-          <div class="pill">⚡ Fast quotes • Clean workmanship • Fully insured</div>
-          <h1 style="margin-top:12px">Trusted Electrician in Surrey</h1>
-          <p class="lead">
-            Reliable electrical work for homes and small businesses — fault finding, consumer units,
-            lighting upgrades, and <strong>EICR certificates</strong>.
-          </p>
-
-          <div class="heroCtas">
-            <a class="btn primary" href="#contact">Get a Quote</a>
-            <a class="btn ghost" href="tel:+447824512971">Call Now</a>
-          </div>
-
-          <div class="trustRow">
-            <span class="pill">✅ Transparent pricing</span>
-            <span class="pill">✅ Tested & certified</span>
-            <span class="pill">✅ Tidy finish</span>
-            <span class="pill">✅ Clear communication</span>
-          </div>
-        </div>
-
-        <div class="heroCard heroRight">
-          <div class="quoteBox">
-            <h3>Quick Quote (1 minute)</h3>
-            <p>
-              Send your postcode + a quick description (photos help). We’ll reply with availability and a price.
+    <!-- HERO -->
+    <main>
+      <section class="hero">
+        <div class="container heroGrid">
+          <div>
+            <h1>Trusted Electrician<br>in Surrey</h1>
+            <p class="lead">
+              Reliable electrical work for homes and small businesses —
+              fault finding, consumer units, lighting upgrades, and
+              <strong style="color:var(--text)">EICR certificates</strong>.
             </p>
-            <div class="miniForm" role="form" aria-label="Quick quote form (demo)">
+
+            <div class="heroCtas">
+              <a class="btn primary" href="#contact">Get a Quote</a>
+              <a class="btn ghost" href="tel:+447824512971">Call Now</a>
+            </div>
+
+            <div class="chipGrid">
+              <span class="chip"><span class="tick">&#10003;</span>Transparent pricing</span>
+              <span class="chip"><span class="tick">&#10003;</span>Tested &amp; certified</span>
+              <span class="chip"><span class="tick">&#10003;</span>Tidy finish</span>
+              <span class="chip"><span class="tick">&#10003;</span>Clear communication</span>
+            </div>
+          </div>
+
+          <div class="quoteCard">
+            <h3>Quick Quote <em>(1 minute)</em></h3>
+            <p>Send your postcode + a quick description (photos help). We&rsquo;ll reply with availability and a price.</p>
+            <div class="miniForm" role="form" aria-label="Quick quote form">
               <input placeholder="Name" />
               <input placeholder="Postcode" />
               <textarea placeholder="What do you need done? (Add photos in WhatsApp if easier)"></textarea>
               <a class="btn primary" href="#contact">Request Quote</a>
-              <div class="small">Tip: connect this to a form tool (Tally / Jotform / your website builder).</div>
+              <div class="formNote">Prefer WhatsApp? Message photos to <a href="tel:+447824512971">07824 512 971</a></div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SERVICES -->
-    <section id="services">
-      <div class="container">
-        <div class="sectionHead">
-          <div>
+      <!-- TRUST STRIP -->
+      <div class="trustStrip">
+        <div class="container">
+          <div class="trustItem"><span class="tick">&#10003;</span>Transparent pricing</div>
+          <div class="trustItem"><span class="tick">&#10003;</span>Tested &amp; certified</div>
+          <div class="trustItem"><span class="tick">&#10003;</span>Tidy finish</div>
+          <div class="trustItem"><span class="tick">&#10003;</span>Clear communication</div>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <section id="services">
+        <div class="container">
+          <div class="sectionHead">
             <h2>Services</h2>
             <p class="sub">Common jobs we handle day-to-day.</p>
           </div>
-        </div>
 
-        <div class="grid3">
-          <div class="card">
-            <div class="icon">⚡</div>
-            <h3>Fault Finding & Repairs</h3>
-            <p>Tripping circuits, dead sockets, flickering lights, and intermittent faults.</p>
-          </div>
-          <div class="card">
-            <div class="icon">🧰</div>
-            <h3>Consumer Units & Rewires</h3>
-            <p>Board upgrades, RCBOs, partial/full rewires — neat, compliant installs.</p>
-          </div>
-          <div class="card">
-            <div class="icon">📄</div>
-            <h3>EICR Certificates</h3>
-            <p>Landlord and homeowner EICRs with clear reporting and remedial options.</p>
-          </div>
-          <div class="card">
-            <div class="icon">💡</div>
-            <h3>Lighting Installations</h3>
-            <p>Spotlights, pendants, LEDs, outdoor/security lighting, dimmers & switching.</p>
-          </div>
-          <div class="card">
-            <div class="icon">🔌</div>
-            <h3>Sockets & Small Works</h3>
-            <p>Additional sockets, kitchen electrics, extractor fans, showers and upgrades.</p>
-          </div>
-          <div class="card">
-            <div class="icon">🚗</div>
-            <h3>EV Chargers</h3>
-            <p>Home charger installations with assessment and tidy cable routes.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- AREAS + HOW IT WORKS -->
-    <section id="areas">
-      <div class="container split">
-        <div class="card">
-          <h2>Areas Covered</h2>
-          <p class="sub">Based locally — covering nearby areas for domestic & small commercial work.</p>
-          <div class="list">
-            <div class="li"><div class="tick">✓</div><div><strong>Epsom • Ewell • Banstead</strong></div></div>
-            <div class="li"><div class="tick">✓</div><div><strong>Sutton • Croydon • Kingston</strong></div></div>
-            <div class="li"><div class="tick">✓</div><div><strong>Leatherhead • Surrey area</strong></div></div>
+          <div class="grid3">
+            <div class="card">
+              <div class="icon">&#9889;</div>
+              <h3>Fault Finding &amp; Repairs</h3>
+              <p>Tripping circuits, dead sockets, flickering lights, and intermittent faults.</p>
+            </div>
+            <div class="card">
+              <div class="icon">&#128295;</div>
+              <h3>Consumer Units &amp; Rewires</h3>
+              <p>Board upgrades, RCBOs, partial/full rewires — neat, compliant installs.</p>
+            </div>
+            <div class="card">
+              <div class="icon">&#128196;</div>
+              <h3>EICR Certificates</h3>
+              <p>Landlord and homeowner EICRs with clear reporting and remedial options.</p>
+            </div>
+            <div class="card">
+              <div class="icon">&#128161;</div>
+              <h3>Lighting Installations</h3>
+              <p>Spotlights, pendants, LEDs, outdoor/security lighting, dimmers &amp; switching.</p>
+            </div>
+            <div class="card">
+              <div class="icon">&#128268;</div>
+              <h3>Sockets &amp; Small Works</h3>
+              <p>Additional sockets, kitchen electrics, extractor fans, showers and upgrades.</p>
+            </div>
+            <div class="card">
+              <div class="icon">&#128663;</div>
+              <h3>EV Chargers</h3>
+              <p>Home charger installations with assessment and tidy cable routes.</p>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="card" style="border-left:6px solid var(--accent)">
-          <h2>How it works</h2>
-          <div class="list">
-            <div class="li"><div class="tick">1</div><div><strong>Send details</strong><br><span class="sub">Message what you need + postcode + photos.</span></div></div>
-            <div class="li"><div class="tick">2</div><div><strong>Get a quote</strong><br><span class="sub">We confirm price and availability.</span></div></div>
-            <div class="li"><div class="tick">3</div><div><strong>Job done</strong><br><span class="sub">Tested, tidy finish, certified where required.</span></div></div>
+      <!-- AREAS + HOW IT WORKS -->
+      <section id="areas">
+        <div class="container split">
+          <div class="card">
+            <h2>Areas Covered</h2>
+            <p class="sub">Based locally — covering nearby areas for domestic &amp; small commercial work.</p>
+            <div class="list">
+              <div class="li"><span class="tick">&#10003;</span><div><strong>Epsom &bull; Ewell &bull; Banstead</strong></div></div>
+              <div class="li"><span class="tick">&#10003;</span><div><strong>Sutton &bull; Croydon &bull; Kingston</strong></div></div>
+              <div class="li"><span class="tick">&#10003;</span><div><strong>Leatherhead &bull; Surrey area</strong></div></div>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:4px solid var(--accent)">
+            <h2>How it works</h2>
+            <div class="list">
+              <div class="li"><span class="stepNum">1</span><div><strong>Send details</strong><br><span class="sub">Message what you need + postcode + photos.</span></div></div>
+              <div class="li"><span class="stepNum">2</span><div><strong>Get a quote</strong><br><span class="sub">We confirm price and availability.</span></div></div>
+              <div class="li"><span class="stepNum">3</span><div><strong>Job done</strong><br><span class="sub">Tested, tidy finish, certified where required.</span></div></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- PRICING -->
-    <section id="pricing">
-      <div class="container">
-        <div class="sectionHead">
-          <div>
+      <!-- PRICING -->
+      <section id="pricing">
+        <div class="container">
+          <div class="sectionHead">
             <h2>Pricing</h2>
             <p class="sub">Clear starting prices — final quote depends on site conditions.</p>
           </div>
-        </div>
 
-        <div class="grid3">
-          <div class="card">
-            <div class="icon">£</div>
-            <h3>Day rate</h3>
-            <p><strong>£400 / day</strong> (domestic) — Surrey area.</p>
+          <div class="grid3">
+            <div class="card">
+              <div class="icon">&pound;</div>
+              <h3>Day rate</h3>
+              <p><span class="price">&pound;400 / day</span> (domestic) — Surrey area.</p>
+            </div>
+            <div class="card">
+              <div class="icon">&#129534;</div>
+              <h3>EICR</h3>
+              <p>
+                Studio: <span class="price">&pound;200</span><br/>
+                1&ndash;2 bed: <span class="price">&pound;250</span><br/>
+                3&ndash;4 bed: <span class="price">&pound;300</span><br/>
+                5 bed: <span class="price">&pound;350+</span>
+              </p>
+            </div>
+            <div class="card">
+              <div class="icon">&#9989;</div>
+              <h3>Small jobs</h3>
+              <p>Quoted upfront once we&rsquo;ve seen details/photos. No surprises.</p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <div class="container split">
           <div class="card">
-            <div class="icon">🧾</div>
-            <h3>EICR</h3>
-            <p>
-              Studio: <strong>£200</strong><br/>
-              1–2 bed: <strong>£250</strong><br/>
-              3–4 bed: <strong>£300</strong><br/>
-              5 bed: <strong>£350+</strong>
+            <h2>About <span class="accentText">DH</span></h2>
+            <p class="sub">
+              Professional electrical work with a focus on safety, reliability, and a clean finish.
+              You&rsquo;ll get clear options, tidy workmanship, and certificates where required.
             </p>
+            <div class="list">
+              <div class="li"><span class="tick">&#10003;</span><div>Fully insured</div></div>
+              <div class="li"><span class="tick">&#10003;</span><div>Tested &amp; certified</div></div>
+              <div class="li"><span class="tick">&#10003;</span><div>Respectful, tidy work in occupied homes</div></div>
+            </div>
           </div>
+
           <div class="card">
-            <div class="icon">✅</div>
-            <h3>Small jobs</h3>
-            <p>Quoted upfront once we’ve seen details/photos. No surprises.</p>
+            <h2>Recent work</h2>
+            <p class="sub">A selection of recent installs — consumer units, lighting, neat trunking.</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+              <div style="height:96px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.03)"></div>
+              <div style="height:96px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.03)"></div>
+              <div style="height:96px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.03)"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="container split">
-        <div class="card">
-          <h2>About <span class="accentText">DH</span></h2>
-          <p class="sub">
-            Professional electrical work with a focus on safety, reliability, and a clean finish.
-            You’ll get clear options, tidy workmanship, and certificates where required.
-          </p>
-          <div class="list">
-            <div class="li"><div class="tick">✓</div><div>Fully insured</div></div>
-            <div class="li"><div class="tick">✓</div><div>Tested & certified</div></div>
-            <div class="li"><div class="tick">✓</div><div>Respectful, tidy work in occupied homes</div></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Recent work</h2>
-          <p class="sub">Add your best 6–12 photos (consumer unit, lighting, neat trunking, etc.).</p>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px">
-            <div style="height:92px;border-radius:14px;border:1px dashed var(--border);background:#fff"></div>
-            <div style="height:92px;border-radius:14px;border:1px dashed var(--border);background:#fff"></div>
-            <div style="height:92px;border-radius:14px;border:1px dashed var(--border);background:#fff"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="container contactGrid">
-        <div class="card">
-          <h2>Get a Quote</h2>
-          <p class="sub">Fill this in and we’ll get back to you ASAP.</p>
-          <form>
-            <input placeholder="Full name" />
-            <input placeholder="Phone number" />
-            <input placeholder="Postcode" />
-            <textarea placeholder="What do you need done? (Include any deadline)"></textarea>
-            <a class="btn primary" href="mailto:d.high@dh-electrical.uk">Email Request</a>
-            <div class="note">Want leads fast? Add a WhatsApp button and photo upload.</div>
-          </form>
-        </div>
-
-        <div class="card" style="background:linear-gradient(180deg,#fff,#F7FBF9);border-left:6px solid var(--accent)">
-          <h2>Contact</h2>
-          <div class="list">
-            <div class="li"><div class="tick">☎</div><div><strong>Phone</strong><br><a href="tel:+447824512971">07824 512 971</a></div></div>
-            <div class="li"><div class="tick">@</div><div><strong>Email</strong><br><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></div></div>
-            <div class="li"><div class="tick">⏱</div><div><strong>Hours</strong><br><span class="sub">Mon–Sat: 8am–6pm</span></div></div>
+      <!-- CONTACT -->
+      <section id="contact">
+        <div class="container contactGrid">
+          <div class="card">
+            <h2>Get a Quote</h2>
+            <p class="sub" style="margin-bottom:14px">Fill this in and we&rsquo;ll get back to you ASAP.</p>
+            <form>
+              <input placeholder="Full name" />
+              <input placeholder="Phone number" />
+              <input placeholder="Postcode" />
+              <textarea placeholder="What do you need done? (Include any deadline)"></textarea>
+              <a class="btn primary" href="mailto:d.high@dh-electrical.uk">Email Request</a>
+            </form>
           </div>
 
-          <div style="margin-top:14px" class="note">
-            Add: Emergency call-outs (if you do) • Card payments (if you do) • NICEIC/NAPIT (if registered)
+          <div class="card contactCard">
+            <h2>Contact</h2>
+            <div class="list">
+              <div class="li"><span class="stepNum">&#9743;</span><div><strong>Phone</strong><br><a href="tel:+447824512971">07824 512 971</a></div></div>
+              <div class="li"><span class="stepNum">@</span><div><strong>Email</strong><br><a href="mailto:d.high@dh-electrical.uk">d.high@dh-electrical.uk</a></div></div>
+              <div class="li"><span class="stepNum">&#9201;</span><div><strong>Hours</strong><br><span class="sub">Mon&ndash;Sat: 8am&ndash;6pm</span></div></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
     <footer>
       <div class="container foot">
         <div>
           <strong style="color:#fff">DH Electrical Services</strong><br>
-          <span class="small">Surrey & surrounding areas • Fully insured</span>
+          <span class="small">Surrey &amp; surrounding areas &bull; Fully insured</span>
         </div>
         <div class="small">
-          © <span id="y"></span> DH Electrical Services • Privacy Policy • Terms
+          &copy; <span id="y"></span> DH Electrical Services &bull; Privacy Policy &bull; Terms
         </div>
       </div>
     </footer>
-  </main>
+  </div>
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
