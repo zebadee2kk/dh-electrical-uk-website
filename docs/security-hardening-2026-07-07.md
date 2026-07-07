@@ -65,6 +65,6 @@ The repo config now adds HSTS and Permissions-Policy on top of those.
 
 ## Notes
 
-- WPS Hide Login was left as a future enhancement rather than forced immediately; the site already has login rate limiting + 2FA in place.
+- WPS Hide Login is active and the login path is now `/manage/`; the site also has login rate limiting + 2FA in place.
 - No content or page rendering changes were made in this pass.
 - The repo docs were updated to reflect the real live plugin set and the new hardening baseline.
