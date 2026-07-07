@@ -63,6 +63,9 @@ Before this change, the site already sent:
 
 The repo config now adds HSTS and Permissions-Policy on top of those.
 
+### HTML cache behavior
+HTML page responses now send `Cache-Control: no-cache, no-store, must-revalidate` so mobile browsers revalidate and avoid sticky stale markup.
+
 ## Notes
 
 - WPS Hide Login is active and the login path is now `/manage/`; the site also has login rate limiting + 2FA in place.

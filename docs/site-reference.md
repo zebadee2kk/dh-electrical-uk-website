@@ -99,6 +99,7 @@ Rollback sequence:
 - [x] Hidden files denied (except .well-known)
 - [ ] Cloudflare proxying (not set — DNS at GoDaddy)
 - [x] WPS Hide Login (login path moved to `/manage/`)
+- [x] HTML pages send `Cache-Control: no-cache, no-store, must-revalidate` so mobile browsers revalidate instead of sticking to stale markup
 
 ## Deployment Command
 
