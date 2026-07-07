@@ -7,7 +7,7 @@
 | **Domain** | dh-electrical.uk |
 | **Platform** | WordPress 6.8 on vps02 (Ubuntu, Nginx, PHP 8.3, MariaDB 10.6) |
 | **Theme** | Astra 4.13.5 (dark theme, green/silver brand colors) |
-| **Plugins** | Contact Form 7, Limit Login Attempts Reloaded, Two Factor, WP Mail SMTP, WP Super Cache, Yoast SEO |
+| **Plugins** | Contact Form 7, Limit Login Attempts Reloaded, Two Factor, WPS Hide Login, WP Mail SMTP, WP Super Cache, Yoast SEO |
 | **Hosting** | vps02 (145.241.209.163, OCI) — same VPS as theitrevolution.co.uk |
 | **DNS** | GoDaddy nameservers (ns35/ns36.domaincontrol.com), A records to vps02 IP |
 | **SSL** | Let's Encrypt via certbot, auto-renews (expires 2026-10-04) |
@@ -64,6 +64,7 @@
 - No additional plugins are currently needed for the live site
 - WP Mail SMTP is active and configured for SMTP delivery with `d.hill@dh-electrical.uk` as the sender; the relay host remains the local mail backend on vps02
 - Login hardening is now in place via Limit Login Attempts Reloaded + Two Factor
+- WPS Hide Login is active and the login path is now `/manage/`
 - Plugin auto-updates are enabled for the active plugin set
 - Quick Quote form via Contact Form 7 (ID: 20) — sends to d.hill@dh-electrical.uk
 
@@ -97,7 +98,7 @@ Rollback sequence:
 - [x] xmlrpc.php blocked
 - [x] Hidden files denied (except .well-known)
 - [ ] Cloudflare proxying (not set — DNS at GoDaddy)
-- [ ] WPS Hide Login (not installed yet)
+- [x] WPS Hide Login (login path moved to `/manage/`)
 
 ## Deployment Command
 

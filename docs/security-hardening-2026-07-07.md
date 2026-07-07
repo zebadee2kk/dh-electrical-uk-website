@@ -9,11 +9,16 @@ Scope: live WordPress site on vps02 plus repo docs/config alignment.
 Installed and activated:
 - Limit Login Attempts Reloaded
 - Two Factor
+- WPS Hide Login
 
 Removed inactive plugins:
 - Akismet
 - Elementor
 - Hello Dolly
+
+### Hidden login path
+- WPS Hide Login slug: `/manage/`
+- Old `/wp-login.php` now returns 404
 
 Enabled auto-updates for the active plugin set:
 - Contact Form 7
