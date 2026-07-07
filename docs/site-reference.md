@@ -7,7 +7,7 @@
 | **Domain** | dh-electrical.uk |
 | **Platform** | WordPress 6.8 on vps02 (Ubuntu, Nginx, PHP 8.3, MariaDB 10.6) |
 | **Theme** | Astra 4.13.5 (dark theme, green/silver brand colors) |
-| **Plugins** | Contact Form 7, Yoast SEO, WP Super Cache, WP Mail SMTP |
+| **Plugins** | Contact Form 7, Limit Login Attempts Reloaded, Two Factor, WP Mail SMTP, WP Super Cache, Yoast SEO |
 | **Hosting** | vps02 (145.241.209.163, OCI) — same VPS as theitrevolution.co.uk |
 | **DNS** | GoDaddy nameservers (ns35/ns36.domaincontrol.com), A records to vps02 IP |
 | **SSL** | Let's Encrypt via certbot, auto-renews (expires 2026-10-04) |
@@ -62,7 +62,9 @@
 
 - No n8n pipeline configured yet
 - No additional plugins are currently needed for the live site
-- WP Mail SMTP is already installed and active, but its sender settings still point at `d.high@dh-electrical.uk` and mailer is set to `mail`; update config only if you want to harden delivery
+- WP Mail SMTP is active and configured for SMTP delivery with `d.hill@dh-electrical.uk` as the sender; the relay host remains the local mail backend on vps02
+- Login hardening is now in place via Limit Login Attempts Reloaded + Two Factor
+- Plugin auto-updates are enabled for the active plugin set
 - Quick Quote form via Contact Form 7 (ID: 20) — sends to d.hill@dh-electrical.uk
 
 ## Current Rendering Approach
@@ -90,7 +92,7 @@ Rollback sequence:
 ## Security Hardening
 
 - [x] SSL/HTTPS enforced (301 redirect from HTTP)
-- [x] Security headers (X-Content-Type-Options, X-Frame-Options, Referrer-Policy)
+- [x] Security headers (X-Content-Type-Options, X-Frame-Options, Referrer-Policy, HSTS, Permissions-Policy)
 - [x] PHP execution blocked in uploads
 - [x] xmlrpc.php blocked
 - [x] Hidden files denied (except .well-known)
